@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import { logger } from '../utils/loggers'
 import { createProductValidate } from '../validations/product.validation'
+import { getProductDB } from '../services/product.service'
 
-export const createProduct = (req: Request, res: Response) => {
+const createProduct = (req: Request, res: Response) => {
   const { error, value } = createProductValidate(req.body)
   if (error) {
     logger.error('Err: product-create', error.details[0].message);
@@ -21,28 +22,29 @@ export const createProduct = (req: Request, res: Response) => {
   })
 }
 type Product = {
+    product_id: string,
     name: string,
     price: number,
-    type?: string | null
+    type?: string,
+    size?:String
 }
 
-export const getProduct = (req: Request, res: Response) => {
-  const products: Array<Product> = [
-    { name: 'Asuz Xx he', price: 1 },
-    { name: 'Mac book pro Xvs 899', price: 13_000_900 },
-    { name: 'Mac book pro Xvs 899', price: 1_000_900 },
-    { name: 'Acer pro VcY 9023a', price: 2_030_000 },
-    { name: 'Azuz Zenbook 782x', price: 5_000_934 },
-    { name: 'Laptop Asus', price: 200_000, type: 'asuz 9002 A' },
-    { name: 'Laptop Acer', price: 250_000, type: 'asuz aspore 89X' }
-  ]
-
+const getProduct = async (req: Request, res: Response) => {
+  const products = await getProductDB()
   const { params: { name } } = req // const { nama } = req.params
-  let filteredProducts: Product[] | [] = products;
+  let filteredProducts = products;
   if (name) {
-    filteredProducts = products?.filter((product) => product.name.includes(name))
+    filteredProducts = filteredProducts.filter((product) => {
+      return product.name?.toLocaleLowerCase().includes(name.toLocaleLowerCase())
+    })
   }
-  // validate if filteredProduct code 404 length is < 1
+  if (filteredProducts.length < 1) {
+    return res.status(404).send({
+      status: false,
+      statusCode: 404,
+      data: []
+    })
+  }
   return res.status(200).send({
     status: true,
     'status-code': 200,
@@ -50,3 +52,5 @@ export const getProduct = (req: Request, res: Response) => {
   })
 //   next()
 }
+
+export { createProduct, getProduct, Product }

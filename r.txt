@@ -1,8 +1,0 @@
-npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parsereslint eslint-condif-standart eslint-plugin-import eslint-plugin-node eslint-pl
-ugin-promise eslint-plugin-standard
-
-npm i --save-dev -save-exact prettier
-
- npm i pono pino-pretty
-
- npm i moment
