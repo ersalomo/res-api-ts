@@ -22,5 +22,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 routes(app)
 
 app.listen(port, () => {
-  logger.info(`server listen on ${port}`)
+  logger.info(`server listen on http://localhost:${port}`)
 })
