@@ -1,4 +1,3 @@
-.gitignore
 build
 node_modules
 nodemon.json
@@ -8,3 +7,4 @@ tsconfig.json
 .prettierrc
 .prettierignore
 .env
+.gitignore
