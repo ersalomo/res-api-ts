@@ -24,6 +24,10 @@ export default class ProductService {
   static async update(id:string, data:ProductType) {
     return await productModel.findOneAndUpdate({ product_id: id }, { $set: data })
   }
+
+  static async delete(id:string) {
+    return await productModel.findOneAndDelete({ product_id: id })
+  }
 }
 
 // Promise<ProductType[]>

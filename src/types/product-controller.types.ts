@@ -8,7 +8,7 @@ detailProduct():Promise<Response<any, Record<string, any>>>;
 
 }
 type Controllers = {
- async x():string
+//  async x():string
 }
 
 // export default Controller;

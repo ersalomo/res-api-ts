@@ -5,6 +5,7 @@ import ProductService from '../services/product.srv'
 import { logger } from '../utils/loggers'
 import ProductType from '../types/products.types'
 import SuccessResponse from '../response/SuccessResponse'
+// import * as Res from '../response/Response.response'
 // import { productModel } from '../models/product.model'
 // import Controller from '../types/product-controller.types'
 
@@ -44,22 +45,22 @@ export default class ProductController {
   static async getProducts(req: Request, res: Response) {
     const products:any = await ProductService.getProducts()
     const { name, id } = req.params
-    let filteredProducts;
-    if (id) {
-      const product = await this.detailProduct(id)
-      if (product) {
-        return res.status(200).send({
-          status: true,
-          statusCode: res.statusCode,
-          data: product
-        })
-      }
-      return res.status(404).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: 'Product not found'
-      })
-    }
+    let filteredProducts = products;
+    // if (id) {
+    //   const product = await this.detailProduct(id)
+    //   if (product) {
+    //     return res.status(200).send({
+    //       status: true,
+    //       statusCode: res.statusCode,
+    //       data: product
+    //     })
+    //   }
+    //   return res.status(404).send({
+    //     status: false,
+    //     statusCode: res.statusCode,
+    //     message: 'Product not found'
+    //   })
+    // }
     if (name) {
       filteredProducts = products.filter((product: ProductType) => {
         return product.name.toLowerCase().includes(name.toLowerCase());
@@ -132,13 +133,49 @@ export default class ProductController {
     })
   }
 
-  private static async detailProduct(id:string) {
-    console.info(id)
+  static async detailProduct(req:Request, res: Response) {
+    const { id } = req.params
     try {
-      return await ProductService.findProduct(id)
+      const result = await ProductService.findProduct(id)
+      if (result) {
+        return res.status(200).send({
+          status: true,
+          statusCode: res.statusCode,
+          data: result
+        });
+      }
+      return res.status(404).send({
+        status: false,
+        statusCode: res.statusCode,
+        message: 'Product not found'
+      });
     } catch (err) {
       logger.error(err)
       return false;
+    }
+  }
+
+  static async deleteProduct(req:Request, res:Response) {
+    const { id } = req.params;
+    logger.info('Delete Product...')
+    try {
+      const response = await ProductService.delete(id)
+      if (response) {
+        logger.info('Response Delete', response)
+        return res.status(200).send({
+          status: true,
+          statusCode: res.statusCode,
+          message: 'Product berhasil dihapus'
+        });
+      }
+      return res.status(422).send({
+        status: false,
+        statusCode: res.statusCode,
+        message: 'Product tidak ditemukan'
+      });
+    } catch (err) {
+      logger.error(`Err: error delete product ${err}`)
+      return false
     }
   }
 }
