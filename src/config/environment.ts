@@ -1,7 +1,28 @@
 import 'dotenv/config'
 
 const CONFIG = {
-  db: process.env.DB
+  db: process.env.DB,
+  jwt_private_key: `-----BEGIN PUBLIC KEY-----
+MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgFp93nmKNW+rFFqRpuoi3GuTUu8z
+ouuAP8rtGWbP5udBbVJs2iZaZS/v1bra6m6Ej4cfdwECbsk+idELmiCIFqm5+85a
+E4uSzlIJmAVRCZi5EHiictxzV3p6K2AqRIU2kDiMNujwhg6Ru71DDBk1uvgLiXpt
+cmWZnIAltHzQV3NNAgMBAAE=
+-----END PUBLIC KEY-----`,
+  jwt_public_key: `-----BEGIN RSA PRIVATE KEY-----
+MIICWQIBAAKBgFp93nmKNW+rFFqRpuoi3GuTUu8zouuAP8rtGWbP5udBbVJs2iZa
+ZS/v1bra6m6Ej4cfdwECbsk+idELmiCIFqm5+85aE4uSzlIJmAVRCZi5EHiictxz
+V3p6K2AqRIU2kDiMNujwhg6Ru71DDBk1uvgLiXptcmWZnIAltHzQV3NNAgMBAAEC
+gYAPP87R5HyEyOuxJ4JdSmqipjz/mlAGJ6KYa8QwEzDyH5Bwp29Lr0gGAACgcGu5
+HBWjy6WeQe6xcxx+YdojSUuoMuc85r5atg1eEVKD8TrWg4gYaqj9tW2XklC3pAGH
+NZBV9mIOOPfGpPiZxU9kyAUpsGRRLJEjEkxvqKP+BYDNgQJBAKfz+f5/bM3eAxZw
+1Szd7o0SEMPLO5Hm1vdPNgR0HSRVSpI5AT5gahn4cux+cEzxF1S9GpW+WzcC3A/Y
+tptqH/kCQQCJ7j5KcVEDnZlvMu8mhE+fRun8G21dbEH4yw8Og6cMlbanAckHN7ta
+M+G0ox9TjpcO7begwmupW2FlDKswyCr1AkBWz+oxXQYNZysrZ0kY9uH+Mw9NVPhG
+kw4cKOpf5PDHPfrcl/CHoGhXYi9tBHHho2CO4WwjaJBXX/gFjNveez1pAkAj4S2i
+/8crQZvgKUe8pT5xGGlVg2z3mGmw5mGMTQLvayKQXw6EKiM6W7Si4KwNeFIjOANE
+dk67R2IWfy0pC2jhAj8dhGy7qTglzMAvnwlbavyIS2nVGo+Pme6ZwPUO7HGtaue3
+5NEkO0kT9qaQ8qKU78v0a8Tcm4Wuye91LqUsXow=
+-----END RSA PRIVATE KEY-----`
 }
 
 export default CONFIG

@@ -15,5 +15,8 @@ export const UserService = {
       }).catch((error) => {
         logger.error(error)
       })
+  },
+  async findUserByEmail(email: string) {
+    return await UserModel.findOne({ email })
   }
 }
