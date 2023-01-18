@@ -13,7 +13,7 @@ export const UserValidate = {
     return schema.validate(payload)
   },
 
-  async loginValidate(payload: UserType) {
+  loginValidate(payload: UserType) {
     const schema = Joi.object({
       email: Joi.string().required().email(),
       password: Joi.string().required()

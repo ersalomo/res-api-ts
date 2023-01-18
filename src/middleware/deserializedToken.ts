@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyJWT } from '../utils/jwt';
 
-const deserialized = async (req: Request, res: Response, next: NextFunction) => {
+const deserializedToken = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.headers.authorization?.replace(/^Bearer\s/, '');
 
   if (!accessToken) {
@@ -19,4 +19,4 @@ const deserialized = async (req: Request, res: Response, next: NextFunction) => 
   return next();
 }
 
-export default deserialized;
+export default deserializedToken;

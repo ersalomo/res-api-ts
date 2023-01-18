@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import CONFIG from '../config/environment';
 import { logger } from './loggers';
+import CONFIG from '../config/environment';
 
 export const signJWT = (payload: Object, options?: jwt.SignOptions | undefined) => {
   return jwt.sign(payload, CONFIG.jwt_private_key, {
@@ -19,7 +19,7 @@ export const verifyJWT = (token: string) => {
       decoded
     }
   } catch (error: any) {
-    logger.error('Err : ', error);
+    logger.error('Err :[jwt]', error);
     return {
       valid: true,
       expired: error.message === 'jwt is expired or not eligible to use',

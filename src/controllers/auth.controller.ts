@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { UserValidate } from '../validations/user.validation'
 import { logger } from '../utils/loggers'
-// import UserType from '../types/user.type';
 import { UserService } from '../services/auth.srv'
 import { hashing, checkPassword } from '../utils/hashing';
 // import UserType from '../types/user.type';
@@ -83,6 +82,7 @@ export const AuthController = {
         token: { accessToken }
       });
     } catch (err) {
+      console.log(err)
       logger.error('Err: login controller', err);
       return res.status(500).json({
         status: false,
