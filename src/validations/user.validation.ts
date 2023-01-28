@@ -12,4 +12,20 @@ export const UserValidate = {
     })
     return schema.validate(payload)
   },
+
+  loginValidate(payload: UserType) {
+    const schema = Joi.object({
+      email: Joi.string().required().email(),
+      password: Joi.string().required()
+    });
+    return schema.validate(payload)
+  },
+
+  refreshTokenValidate(payload: string) {
+    const schema = Joi.object({
+      refreshToken: Joi.string().required(),
+    });
+    return schema.validate(payload)
+  }
+
 }
