@@ -12,7 +12,6 @@ export const signJWT = (payload: Object, options?: jwt.SignOptions | undefined) 
 export const verifyJWT = (token: string) => {
   try {
     const decoded = jwt.verify(token, CONFIG.jwt_public_key);
-
     return {
       valid: true,
       expired: false,

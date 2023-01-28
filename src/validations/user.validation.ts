@@ -21,4 +21,11 @@ export const UserValidate = {
     return schema.validate(payload)
   },
 
+  refreshTokenValidate(payload: string) {
+    const schema = Joi.object({
+      refreshToken: Joi.string().required(),
+    });
+    return schema.validate(payload)
+  }
+
 }
