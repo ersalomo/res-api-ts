@@ -2,7 +2,6 @@ build
 node_modules
 nodemon.json
 package-lock.json
-tsconfig.json
 .eslintrc.json
 .prettierrc
 .prettierignore
