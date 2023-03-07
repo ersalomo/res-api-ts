@@ -32,8 +32,6 @@ export default class ProductController {
       )
     } catch (err) {
       logger.error(`Error: ${err}`);
-      logger.error(err)
-      logger.info('Error createProduct', err)
       return res.status(422).send({
         status: false,
         statusCode: 422,

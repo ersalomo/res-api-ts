@@ -3,6 +3,7 @@ import config from '../config/environment'
 import { logger } from './loggers'
 
 mongoose.connect(`${config.db}`)
+// mongoose.createConnection(`${config.db}`)
   .then(() => {
     logger.info('Config to mongodb')
   }).catch((error:any) => {

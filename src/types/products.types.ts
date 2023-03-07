@@ -3,5 +3,5 @@ export default interface ProductType {
     name: string,
     price:number;
     type?: string,
-    size: string;
+    size: 'XL' | 'XS' | 'L'| 'M'| 'S'
 }
