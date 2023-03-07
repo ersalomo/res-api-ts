@@ -7,7 +7,7 @@
     "start": "npx tsc -w",
     "dev": "npx nodemon",
     "build": "tsc",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --coverage",
     "format": "prettier --write ."
   },
   "keywords": [],
