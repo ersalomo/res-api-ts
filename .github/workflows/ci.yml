@@ -1,9 +1,12 @@
 name : 'Continious Integration'
 
 on:
+  pull_request:
+    branches:
+      - 'featureAuth'
   push:
     branches:
-      - main
+      - 'main'
 
 jobs:
   test:
@@ -12,6 +15,7 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
+        mongo-version: ['5.0']
 
     steps:
     - uses: actions/checkout@v2
