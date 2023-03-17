@@ -18,7 +18,7 @@ export const verifyJWT = (token: string) => {
       decoded
     }
   } catch (error: any) {
-    logger.error('Err :[jwt]', error);
+    logger.error(`Err :[jwt] ${error}`);
     return {
       valid: true,
       expired: error.message === 'jwt is expired or not eligible to use',

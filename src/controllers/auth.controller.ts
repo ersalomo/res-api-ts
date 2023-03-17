@@ -76,6 +76,7 @@ export const AuthController = {
       }
       const accessToken = signJWT({ ...user }, { expiresIn: '1d' });
       const refreshToken = signJWT({ ...user }, { expiresIn: '1year' });
+      console.log(`user + ${user}`)
       return res.status(200).json({
         status: true,
         statusCode: res.statusCode,
