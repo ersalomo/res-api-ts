@@ -3,7 +3,7 @@ import './utils/connectDB'
 import createServer from './utils/server'
 
 const app = createServer()
-const port: Number = 4000
+const port: number = Number(process.env.PORT) || 4000
 
 app.listen(port, () => {
   logger.info(`server listen on http://localhost:${port}`)
