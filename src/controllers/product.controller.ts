@@ -4,10 +4,8 @@ import { createProductValidate } from '../validations/product.validation'
 import ProductService from '../services/product.srv'
 import { logger } from '../utils/loggers'
 import ProductType from '../types/products.types'
-import SuccessResponse from '../response/SuccessResponse'
-// import * as Res from '../response/Response.response'
-// import { productModel } from '../models/product.model'
-// import Controller from '../types/product-controller.types'
+import CreateProductReponse from '../responses/CreateProductResponse'
+import ProductResponse from '../responses/ProductResponse'
 
 export default class ProductController {
   static async createProduct(req: Request, res: Response):Promise<any> {
@@ -24,11 +22,11 @@ export default class ProductController {
     try {
       await ProductService.addProduct(value)
       return res.status(201).send(
-        SuccessResponse.responseSuccess({
-          status: true,
-          statusCode: res.statusCode,
-          message: 'Product created successfully'
-        })
+        new CreateProductReponse(
+          'success',
+          201,
+          'Product successfully added'
+        )
       )
     } catch (err) {
       logger.error(`Error: ${err}`);
@@ -42,7 +40,7 @@ export default class ProductController {
 
   static async getProducts(req: Request, res: Response) {
     const products:any = await ProductService.getProducts()
-    const { name, id } = req.params
+    const { name } = req.params // id?
     let filteredProducts = products;
     // if (id) {
     //   const product = await this.detailProduct(id)
@@ -70,17 +68,17 @@ export default class ProductController {
           data: []
         })
       }
-      return res.status(200).send({
-        status: false,
-        statusCode: 404,
-        data: filteredProducts
-      })
+      return res.status(200).send(new ProductResponse<ProductType>(
+        'success',
+        200,
+        filteredProducts
+      ))
     }
-    return res.status(200).send({
-      status: true,
-      statusCode: res.statusCode,
-      data: filteredProducts
-    })
+    return res.status(200).send(new ProductResponse<ProductType>(
+      'success',
+      res.statusCode,
+      filteredProducts
+    ))
   }
 
   static async updateProduct(req: Request, res: Response):
@@ -134,13 +132,13 @@ export default class ProductController {
   static async detailProduct(req:Request, res: Response) {
     const { id } = req.params
     try {
-      const result = await ProductService.findProduct(id)
+      const result:any = await ProductService.findProduct(id)
       if (result) {
-        return res.status(200).send({
-          status: true,
-          statusCode: res.statusCode,
-          data: result
-        });
+        return res.status(200).send(new ProductResponse<ProductType>(
+          'success',
+          res.statusCode,
+          result
+        ));
       }
       return res.status(404).send({
         status: false,

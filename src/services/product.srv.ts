@@ -17,7 +17,7 @@ export default class ProductService {
     return await productModel.create(payload)
   }
 
-  static async findProduct(id:string) {
+  static async findProduct(id:string):Promise<Partial<ProductType> | null> {
     return await productModel.findOne({ product_id: id })
   }
 
