@@ -3,14 +3,30 @@ import mongoose from 'mongoose';
 import supertest from 'supertest';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
-// import { v4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import createServer from '../utils/server';
+import { hashing } from '../utils/hashing';
+import { UserService } from '../services/auth.srv';
 
 const app = createServer()
+
+const user = {
+  user_id: uuidv4(),
+  name: 'Ersalomo S',
+  role: 'user',
+  email: 'user_user@gmail.com',
+  password: hashing('12345678'),
+}
+
+const userCreated = {
+  email: 'user_user@gmail.com',
+  password: '12345678',
+}
 describe('auth endpoint', () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
     await mongoose.connect(mongoServer.getUri())
+    await UserService.createUser(user)
   })
   afterAll(async () => {
     await mongoose.disconnect();
@@ -52,12 +68,8 @@ describe('auth endpoint', () => {
       expect(response.statusCode).toBe(400)
     })
     it('should return 200 when payload meet specifacition', async () => {
-      const payload = {
-        email: 'test@example.com',
-        password: 'password'
-      }
       const response = await supertest(app).post('/auth/login')
-        .send(payload)
+        .send(userCreated)
 
       expect(response.statusCode).toBe(200)
     })
