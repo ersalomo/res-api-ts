@@ -3,7 +3,7 @@ name : 'Continious Integration'
 on:
   pull_request:
     branches:
-      - 'featureAuth'
+      - 'testing'
   push:
     branches:
       - 'main'
