@@ -22,6 +22,11 @@ const userCreated = {
   email: 'user_user@gmail.com',
   password: '12345678',
 }
+const userWrongPassword = {
+  email: 'user_user@gmail.com',
+  password: '123456755',
+}
+
 describe('auth endpoint', () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create();
@@ -67,10 +72,22 @@ describe('auth endpoint', () => {
 
       expect(response.statusCode).toBe(400)
     })
+    it('should return 404 when user does not exist', async () => {
+      const payload = {
+        email: 'test@example.com',
+        password: 'passwordadada'
+      }
+      const res = await supertest(app).post('/auth/login').send(payload)
+      expect(res.statusCode).toBe(404);
+    })
+    it('should return 401 when password is wrong', async () => {
+      const res = await supertest(app).post('/auth/login').send(userWrongPassword)
+      expect(res.statusCode).toBe(401);
+    })
+
     it('should return 200 when payload meet specifacition', async () => {
       const response = await supertest(app).post('/auth/login')
         .send(userCreated)
-
       expect(response.statusCode).toBe(200)
     })
   })
