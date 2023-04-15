@@ -18,7 +18,7 @@ describe('product-validation test', () => {
       const { error } = validator.createProductValidate(payload)
       // Assert
       // eslint-disable-next-line no-useless-escape
-      expect(error?.message).toEqual('\"type\" is not allowed to be empty')
+      expect(error?.message).toBe('\"type\" is not allowed to be empty')
     })
     it('should validate product payload correctly', async () => {
       // Arrange

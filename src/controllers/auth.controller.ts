@@ -67,8 +67,12 @@ export const AuthController = {
     }
     try {
       const user: any = await UserService.findUserByEmail(value.email);
+      if (!user) {
+        return res.status(404).json({
+          message: 'email not found'
+        });
+      }
       const isValid = checkPassword(value.password, user.password)
-
       if (!isValid) {
         return res.status(401).json({
           message: 'invalid email or password'
