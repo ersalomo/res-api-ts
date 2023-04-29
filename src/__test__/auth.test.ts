@@ -72,6 +72,7 @@ describe('auth endpoint', () => {
 
       expect(response.statusCode).toBe(400)
     })
+
     it('should return 404 when user does not exist', async () => {
       const payload = {
         email: 'test@example.com',
@@ -80,6 +81,7 @@ describe('auth endpoint', () => {
       const res = await supertest(app).post('/auth/login').send(payload)
       expect(res.statusCode).toBe(404);
     })
+
     it('should return 401 when password is wrong', async () => {
       const res = await supertest(app).post('/auth/login').send(userWrongPassword)
       expect(res.statusCode).toBe(401);

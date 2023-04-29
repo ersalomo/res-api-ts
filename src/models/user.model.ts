@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import UserType from '../types/user.type';
+
+const USER_DOCUMENT = 'users'
 
 const userSchema = new mongoose.Schema({
   user_id: { type: String, unique: true },
@@ -8,4 +11,4 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: 'regular' },
 }, { timestamps: true });
 
-export const UserModel = mongoose.model('users', userSchema);
+export const UserModel = mongoose.model<UserType>(USER_DOCUMENT, userSchema);

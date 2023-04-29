@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import ProductType from '../types/products.types';
+
+const PRODUCT_DOC = 'products'
 
 const productSchema = new mongoose.Schema(
   {
@@ -14,4 +17,4 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export const productModel = mongoose.model('products', productSchema)
+export const productModel = mongoose.model<ProductType>(PRODUCT_DOC, productSchema)
