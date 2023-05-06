@@ -1,11 +1,11 @@
-import { Response } from "express";
-import ApiResponse from "../ApiResponse/ApiResponse";
-import AuthFailureResponse from "../ApiResponse/AuthFailureResponse ";
-import AccessTokenErrorResponse from "../ApiResponse/AccessTokenErrorResponse ";
-import InternalErrorResponse from "../ApiResponse/InternalErrorResponse ";
-import NotFoundResponse from "../ApiResponse/NotFoundResponse ";
-import BadRequestResponse from "../ApiResponse/BadRequestResponse ";
-import ForbiddenResponse from "../ApiResponse/ForbiddenResponse ";
+import { Response } from 'express';
+import ApiResponse from '../ApiResponse/ApiResponse';
+import AuthFailureResponse from '../ApiResponse/AuthFailureResponse ';
+import AccessTokenErrorResponse from '../ApiResponse/AccessTokenErrorResponse ';
+import InternalErrorResponse from '../ApiResponse/InternalErrorResponse ';
+import NotFoundResponse from '../ApiResponse/NotFoundResponse ';
+import BadRequestResponse from '../ApiResponse/BadRequestResponse ';
+import ForbiddenResponse from '../ApiResponse/ForbiddenResponse ';
 
 export enum ErrorType {
   BAD_TOKEN = 'BadTokenError',
