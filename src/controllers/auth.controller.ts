@@ -4,7 +4,6 @@ import { UserValidate } from '../validations/user.validation'
 import { logger } from '../utils/loggers'
 import { UserService } from '../services/auth.srv'
 import { hashing, checkPassword } from '../utils/hashing';
-// import UserType from '../types/user.type';
 import { signJWT, verifyJWT } from '../utils/jwt';
 
 export const AuthController = {
