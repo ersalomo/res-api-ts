@@ -1,4 +1,9 @@
-import { Response } from "express";
+/* eslint-disable no-useless-constructor */
+/* eslint-disable no-empty-function */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
+import { Response } from 'express';
+import { logger } from '../../utils/loggers';
 
 // Helper code for the API consumer to understand the error and handle is accordingly
 export enum StatusCode {
@@ -11,6 +16,7 @@ export enum StatusCode {
 export enum ResponseStatus {
   SUCCESS = 200,
   BAD_REQUEST = 400,
+  BAD_PAYLOAD = 422,
   UNAUTHORIZED = 401,
   FORBIDDEN = 403,
   NOT_FOUND = 404,
@@ -29,9 +35,14 @@ export default abstract class ApiResponse {
     response: T,
     headers: {[key:string]:string}
   ): Response {
-    for (const [ key, value ] of Object.entries(headers)) {
-      res.append(key, value);
-    }
+    // for (const [ key, value ] of Object.entries(headers)) {
+    //   res.append(key, value);
+    // }
+    Object.entries(headers).forEach((value) => {
+      const [key, val] = value
+      logger.info(`Info [${value}]`)
+      res.append(key, val);
+    })
     return res.status(this.status).json(ApiResponse.sanitize(response));
   }
 
@@ -48,6 +59,7 @@ export default abstract class ApiResponse {
     for (const i in clone) {
       if (typeof clone[i] === 'undefined') delete clone[i];
     }
+
     return clone;
   }
 }

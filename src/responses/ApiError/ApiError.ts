@@ -1,11 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 import { Response } from 'express';
-import ApiResponse from '../ApiResponse/ApiResponse';
 import AuthFailureResponse from '../ApiResponse/AuthFailureResponse ';
 import AccessTokenErrorResponse from '../ApiResponse/AccessTokenErrorResponse ';
 import InternalErrorResponse from '../ApiResponse/InternalErrorResponse ';
 import NotFoundResponse from '../ApiResponse/NotFoundResponse ';
 import BadRequestResponse from '../ApiResponse/BadRequestResponse ';
 import ForbiddenResponse from '../ApiResponse/ForbiddenResponse ';
+import CONFIG from '../../config/environment';
 
 export enum ErrorType {
   BAD_TOKEN = 'BadTokenError',
@@ -20,12 +22,12 @@ export enum ErrorType {
   FORBIDDEN = 'ForbiddenError',
 }
 
-export default class ApiError extends Error {
+export default abstract class ApiError extends Error {
   constructor(
     public type: ErrorType,
     public message: string = 'error',
   ) {
-    super(message);
+    super(type);
   }
 
   /**
@@ -54,8 +56,8 @@ export default class ApiError extends Error {
         return new ForbiddenResponse(err.message).send(res);
       default: {
         let { message } = err;
-        if (process.env.NODE_ENV === 'development') {
-          message = 'Something went wrong'
+        if (CONFIG.is_dev) {
+          message = 'Something went wrong [dev]'
         }
         return new InternalErrorResponse(message).send(res);
       }

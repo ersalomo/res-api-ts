@@ -4,8 +4,10 @@ import { createProductValidate } from '../validations/product.validation'
 import ProductService from '../services/product.srv'
 import { logger } from '../utils/loggers'
 import ProductType from '../types/products.types'
-import CreateProductReponse from '../responses/CreateProductResponse'
-import ProductResponse from '../responses/ProductResponse'
+import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse'
+import NotFoundError from '../responses/ApiError/NotFoundError'
+import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
+import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse'
 
 export default class ProductController {
   static async createProduct(req: Request, res: Response):Promise<any> {
@@ -19,66 +21,25 @@ export default class ProductController {
         message: error.details[0].message
       });
     }
-    try {
-      await ProductService.addProduct(value)
-      return res.status(201).send(
-        new CreateProductReponse(
-          'success',
-          201,
-          'Product successfully added'
-        )
-      )
-    } catch (err) {
-      logger.error(`Error: ${err}`);
-      return res.status(422).send({
-        status: false,
-        statusCode: 422,
-        message: 'gagal menambah product'
-      })
-    }
+    await ProductService.addProduct(value)
+    return new SuccessResponse('product created', value).send(res)
   }
 
   static async getProducts(req: Request, res: Response) {
     const products:any = await ProductService.getProducts()
     const { name } = req.params // id?
     let filteredProducts = products;
-    // if (id) {
-    //   const product = await this.detailProduct(id)
-    //   if (product) {
-    //     return res.status(200).send({
-    //       status: true,
-    //       statusCode: res.statusCode,
-    //       data: product
-    //     })
-    //   }
-    //   return res.status(404).send({
-    //     status: false,
-    //     statusCode: res.statusCode,
-    //     message: 'Product not found'
-    //   })
-    // }
     if (name) {
+      logger.info(name)
       filteredProducts = products.filter((product: ProductType) => {
         return product.name.toLowerCase().includes(name.toLowerCase());
       })
       if (filteredProducts || filteredProducts.length < 1) {
-        return res.status(404).send({
-          status: false,
-          statusCode: 404,
-          data: []
-        })
+        return new NotFoundResponse();
       }
-      return res.status(200).send(new ProductResponse<ProductType>(
-        'success',
-        200,
-        filteredProducts
-      ))
+      return new SuccessResponse('success', filteredProducts).send(res)
     }
-    return res.status(200).send(new ProductResponse<ProductType>(
-      'success',
-      res.statusCode,
-      filteredProducts
-    ))
+    return new SuccessResponse('success', products).send(res)
   }
 
   static async updateProduct(req: Request, res: Response):
@@ -92,17 +53,9 @@ export default class ProductController {
         message: error.details[0].message
       });
     }
-    try {
     // await updateProductById(id, value)
-      await ProductService.update(id, value)
-      return res.status(200).send({
-        status: true,
-        statusCode: 200,
-        message: 'data berhasil diupdate',
-      })
-    } catch (err) {
-      return res.status(500).send({})
-    }
+    await ProductService.update(id, value)
+    return new SuccessMsgResponse('product updated').send(res)
   }
 
   private static async getProduct(req: Request, res: Response) {
@@ -115,63 +68,40 @@ export default class ProductController {
         return product.name?.toLocaleLowerCase().includes(name.toLocaleLowerCase())
       })
       if (filteredProducts || filteredProducts.length < 1) {
-        return res.status(404).send({
-          status: false,
-          statusCode: 404,
-          data: []
-        })
+        return new NotFoundResponse()
       }
     }
-    return res.status(200).send({
-      status: true,
-      statusCode: res.statusCode,
-      data: filteredProducts
-    })
+    return new SuccessResponse('success', filteredProducts).send(res)
   }
 
   static async detailProduct(req:Request, res: Response) {
     const { id } = req.params
-    try {
-      const result:any = await ProductService.findProduct(id)
-      if (result) {
-        return res.status(200).send(new ProductResponse<ProductType>(
-          'success',
-          res.statusCode,
-          result
-        ));
-      }
-      return res.status(404).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: 'Product not found'
-      });
-    } catch (err) {
-      logger.error(err)
-      return false;
+    const result:any = await ProductService.findProduct(id)
+    if (result) {
+      return new SuccessResponse(
+        'success',
+        result
+      ).send(res);
     }
+    return res.status(404).send({
+      status: false,
+      statusCode: res.statusCode,
+      message: 'Product not found'
+    });
   }
 
   static async deleteProduct(req:Request, res:Response) {
     const { id } = req.params;
     logger.info('Delete Product...')
-    try {
-      const response = await ProductService.delete(id)
-      if (response) {
-        logger.info('Response Delete', response)
-        return res.status(200).send({
-          status: true,
-          statusCode: res.statusCode,
-          message: 'Product berhasil dihapus'
-        });
-      }
-      return res.status(422).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: 'Product tidak ditemukan'
-      });
-    } catch (err) {
-      logger.error(`Err: error delete product ${err}`)
-      return false
+    const response = await ProductService.delete(id)
+    if (response) {
+      logger.info('Response Delete', response)
+      return new SuccessMsgResponse('Product berhasil dihapus').send(res)
     }
+    return res.status(422).send({
+      status: false,
+      statusCode: res.statusCode,
+      message: 'Product tidak ditemukan'
+    });
   }
 }
