@@ -1,13 +1,15 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers/auth.controller';
 import { AuthMiddleware } from '../middleware/auth';
+import AsyncHandler from '../helpers/AsyncHandler';
 
 export const AuthRouter = Router()
-AuthRouter.post('/login', AuthController.createSession)
-AuthRouter.post('/register', AuthController.createUser)
+// AuthRouter.use(AsyncHandler)
+AuthRouter.post('/login', AsyncHandler(AuthController.createSession))
+AuthRouter.post('/register', AsyncHandler(AuthController.createUser))
 /**
  * user authenticated
 */
 AuthRouter.use('/users', AuthMiddleware.requireUser)
-AuthRouter.get('/users', AuthController.getUser)
-AuthRouter.post('/users/refresh-token', AuthController.refreshSession,)
+AuthRouter.get('/users', AsyncHandler(AuthController.getUser))
+AuthRouter.post('/users/refresh-token', AsyncHandler(AuthController.refreshSession),)

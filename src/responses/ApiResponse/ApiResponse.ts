@@ -54,11 +54,14 @@ export default abstract class ApiResponse {
     const clone:T = {} as T;
     Object.assign(clone, response);
     // @ts-ignore
-    delete clone.status
+    // delete clone.status
+    // for (const i in clone) {
+    //   if (typeof clone[i] === 'undefined') delete clone[i];
+    // }
 
-    for (const i in clone) {
-      if (typeof clone[i] === 'undefined') delete clone[i];
-    }
+    // Object.entries(clone).forEach((value) => {
+    //   if (typeof value === 'undefined') delete clone[value];
+    // })
 
     return clone;
   }

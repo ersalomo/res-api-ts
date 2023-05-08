@@ -4,10 +4,9 @@ import { createProductValidate } from '../validations/product.validation'
 import ProductService from '../services/product.srv'
 import { logger } from '../utils/loggers'
 import ProductType from '../types/products.types'
-import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse'
-import NotFoundError from '../responses/ApiError/NotFoundError'
+import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
-import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse'
+import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
 
 export default class ProductController {
   static async createProduct(req: Request, res: Response):Promise<any> {
