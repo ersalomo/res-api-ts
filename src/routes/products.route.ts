@@ -13,8 +13,8 @@ ProductRouter.get('/:id/detail', AsyncHandler(ProductController.detailProduct))
 
 ProductRouter.post(
   '/',
-  AuthMiddleware.requireAdmin,
   AuthMiddleware.requireUser,
+  AuthMiddleware.requireAdmin,
   AsyncHandler(ProductController.createProduct)
 )
 

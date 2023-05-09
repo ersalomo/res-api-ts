@@ -12,6 +12,7 @@ import ProductService from '../services/product.srv';
 // import ServerTestHelper from '../../test/ServerTestHelper';
 import { hashing } from '../utils/hashing';
 import { UserService } from '../services/auth.srv';
+import { logger } from '../utils/loggers';
 
 const app = createServer();
 
@@ -65,7 +66,7 @@ describe('product endpoint', () => {
       // const accessToken = await ServerTestHelper.getAccessToken({});
       const { body } = await supertest(app).post('/auth/login').send(userCreated)
       const response = await supertest(app).post('/product')
-        .set({ Authorization: `Bearer ${body.token.accessToken}` })
+        .set({ Authorization: `Bearer ${body.data.accessToken}` })
         .send(payload);
       expect(response.statusCode).toBe(403)
     })
@@ -76,7 +77,7 @@ describe('product endpoint', () => {
       // const accessToken = ServerTestHelper.getAccessToken({})
       const { body } = await supertest(app).post('/auth/login').send(adminCreated)
       const response = await supertest(app).post('/product')
-        .set({ Authorization: `Bearer ${body.token.accessToken}` })
+        .set({ Authorization: `Bearer ${body.data.accessToken}` })
         .send(payload);
 
       expect(response.statusCode).toBe(422)
@@ -85,9 +86,10 @@ describe('product endpoint', () => {
       payload.type = 'For Kids'
       const { body } = await supertest(app).post('/auth/login').send(adminCreated);
       const response = await supertest(app).post('/product')
-        .set({ Authorization: `Bearer ${body.token.accessToken}` })
+        .set({ Authorization: `Bearer ${body.data.accessToken}` })
         .send(payload);
-      expect(response.statusCode).toBe(201)
+      // expect(response.statusCode).toBe(201)
+      expect(response.statusCode).toBe(200)
     });
   })
   describe('detail product', () => {

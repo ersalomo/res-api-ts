@@ -7,6 +7,7 @@ import ProductType from '../types/products.types'
 import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
 import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
+import BadPayloadRequest from '../responses/ApiResponse/BadPayloadRequest'
 
 export default class ProductController {
   static async createProduct(req: Request, res: Response):Promise<any> {
@@ -14,11 +15,7 @@ export default class ProductController {
     const { error, value } = createProductValidate(req.body)
     if (error) {
       logger.error('Err: product-create', error.details[0].message);
-      return res.status(422).send({
-        status: false,
-        statusCode: 422,
-        message: error.details[0].message
-      });
+      return new BadPayloadRequest(error.details[0].message).send(res);
     }
     await ProductService.addProduct(value)
     return new SuccessResponse('product created', value).send(res)

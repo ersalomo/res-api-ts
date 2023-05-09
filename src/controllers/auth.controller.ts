@@ -5,6 +5,10 @@ import { logger } from '../utils/loggers'
 import { UserService } from '../services/auth.srv'
 import { hashing, checkPassword } from '../utils/hashing';
 import { signJWT, verifyJWT } from '../utils/jwt';
+import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
+import AuthFailureResponse from '../responses/ApiResponse/AuthFailureResponse '
+import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
+import BadPayloadRequest from '../responses/ApiResponse/BadPayloadRequest'
 
 export const AuthController = {
   async createUser(req: Request, res: Response):Promise<any> {
@@ -64,68 +68,28 @@ export const AuthController = {
         message: error.details[0].message
       });
     }
-    try {
-      const user: any = await UserService.findUserByEmail(value.email);
-      if (!user) {
-        return res.status(404).json({
-          message: 'email not found'
-        });
-      }
-      const isValid = checkPassword(value.password, user.password)
-      if (!isValid) {
-        return res.status(401).json({
-          message: 'invalid email or password'
-        });
-      }
-      const accessToken = signJWT({ ...user }, { expiresIn: '1d' });
-      const refreshToken = signJWT({ ...user }, { expiresIn: '1year' });
-      return res.status(200).json({
-        status: true,
-        statusCode: res.statusCode,
-        message: 'Login success',
-        token: { accessToken, refreshToken }
-      });
-    } catch (err) {
-      console.log(err)
-      logger.error('Err: login controller', err);
-      return res.status(500).json({
-        status: false,
-        statusCode: res.statusCode,
-        message: 'There something went error'
-      });
-    }
+    const user: any = await UserService.findUserByEmail(value.email);
+    if (!user) return new NotFoundResponse('Not found user').send(res)
+
+    const isValid = checkPassword(value.password, user.password)
+    if (!isValid) new AuthFailureResponse('Invalid email or password').send(res);
+
+    const accessToken = await signJWT({ ...user }, { expiresIn: '1d' });
+    const refreshToken = await signJWT({ ...user }, { expiresIn: '1year' });
+    return new SuccessResponse('success', { accessToken, refreshToken }).send(res);
   },
 
   async refreshSession(req:Request, res:Response) {
     const { error, value } = UserValidate.refreshTokenValidate(req.body);
     if (error) {
-      return res.status(400).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: error.details[0].message
-      });
+      return new BadPayloadRequest(error.details[0].message).send(res)
     }
-    try {
-      const { decoded }:any = verifyJWT(value.refreshToken);
-      const user = UserService.findUserByEmail(decoded._doc.email);
-      if (!user) return false;
-      const accessToken = signJWT({
-        ...user
-      }, {
-        expiresIn: '1d'
-      });
-      return res.status(200).send({
-        status: 'success',
-        accessToken,
-        message: 'Successfully refresh token authentication',
-      });
-    } catch (err) {
-      logger.error('Err: Error AuthController refresh session', err);
-      return res.status(422).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: err,
-      });
-    }
+    const { decoded }:any = await verifyJWT(value.refreshToken);
+    const user = UserService.findUserByEmail(decoded._doc.email);
+    if (!user) return false;
+    const accessToken = signJWT({ ...user }, {
+      expiresIn: '1d'
+    });
+    return new SuccessResponse('Successfully refresh token authentication', accessToken).send(res)
   },
 };

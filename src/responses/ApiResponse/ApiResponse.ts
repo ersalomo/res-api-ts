@@ -15,6 +15,7 @@ export enum StatusCode {
 
 export enum ResponseStatus {
   SUCCESS = 200,
+  CREATED = 201,
   BAD_REQUEST = 400,
   BAD_PAYLOAD = 422,
   UNAUTHORIZED = 401,
