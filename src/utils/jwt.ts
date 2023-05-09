@@ -3,15 +3,17 @@ import { logger } from './loggers';
 import CONFIG from '../config/environment';
 
 export const signJWT = async (payload: Object, options?: jwt.SignOptions | undefined) => {
-  return jwt.sign(payload, await CONFIG.jwt_private_key(), {
+  const privateKey = await CONFIG.jwt_private_key() || CONFIG.PRIVATE_KEY
+  return jwt.sign(payload, privateKey, {
     ...(options && options),
     algorithm: 'RS256',
   });
 }
 
 export const verifyJWT = async (token: string) => {
+  const publicKey = await CONFIG.jwt_public_key() || CONFIG.PUBLIC_KEY
   try {
-    const decoded = jwt.verify(token, await CONFIG.jwt_public_key());
+    const decoded = jwt.verify(token, publicKey);
     return {
       valid: true,
       expired: false,

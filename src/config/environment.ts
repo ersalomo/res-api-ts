@@ -8,6 +8,8 @@ const CONFIG = {
   db_min_pool_size: Number(process.env.DB_MIN_POOL_SIZE) || 2,
   jwt_private_key: async () => await readPrivateKey(),
   jwt_public_key: async () => await readPublicKey(),
+  PRIVATE_KEY: `${process.env.PRIVATE_KEY}`,
+  PUBLIC_KEY: `${process.env.PUBLIC_KEY}`,
 
 }
 
