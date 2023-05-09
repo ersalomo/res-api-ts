@@ -5,6 +5,6 @@ import ApiResponse, {
 
 export default class SuccessMsgResponse extends ApiResponse {
   constructor(message: string) {
-    super(StatusCode.SUCCESS, ResponseStatus.SUCCESS, message);
+    super(StatusCode.SUCCESS, ResponseStatus.CREATED, message);
   }
 }

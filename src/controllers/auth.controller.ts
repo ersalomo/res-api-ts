@@ -1,62 +1,32 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { UserValidate } from '../validations/user.validation'
-import { logger } from '../utils/loggers'
 import { UserService } from '../services/auth.srv'
 import { hashing, checkPassword } from '../utils/hashing';
-import { signJWT, verifyJWT } from '../utils/jwt';
+import { verifyJWT, signJWT } from '../utils/jwt';
 import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
 import AuthFailureResponse from '../responses/ApiResponse/AuthFailureResponse '
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
 import BadPayloadRequest from '../responses/ApiResponse/BadPayloadRequest'
+import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
 
 export const AuthController = {
   async createUser(req: Request, res: Response):Promise<any> {
     req.body.user_id = uuidv4();
     const { error, value } = UserValidate.createUserValidate(req.body);
 
-    if (error) {
-      logger.error('Err:[error create user]', error.details[0].message)
-      return res.status(422).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: error,
-      });
-    }
+    if (error) return new BadPayloadRequest(error.details[0].message).send(res)
 
-    try {
-      value.password = hashing(value.password)
-      await UserService.createUser(value)
-      return res.status(201).send({
-        status: true,
-        statusCode: res.statusCode,
-        message: 'Successfully create new user',
-      })
-    } catch (err) {
-      logger.error('Err: Error server auth controller', err);
-      return res.status(422).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: err,
-      });
-    }
+    value.password = hashing(value.password)
+    await UserService.createUser(value)
+    return new SuccessMsgResponse('user created').send(res)
   },
 
   async getUser(req: Request, res: Response) {
     let users:any = await UserService.getUser()
     users = Array.from(users)
-    if (users.length < 0) {
-      return res.status(404).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: 'User not found!'
-      })
-    }
-    return res.status(200).send({
-      status: true,
-      statusCode: res.statusCode,
-      data: users
-    })
+    if (users.length < 0) return new NotFoundResponse('Not found user')
+    return new SuccessResponse('success', users).send(res)
   },
 
   async createSession(req: Request, res: Response): Promise<any> {
@@ -75,7 +45,7 @@ export const AuthController = {
     if (!isValid) new AuthFailureResponse('Invalid email or password').send(res);
 
     const accessToken = await signJWT({ ...user }, { expiresIn: '1d' });
-    const refreshToken = await signJWT({ ...user }, { expiresIn: '1year' });
+    const refreshToken = await signJWT({ ...user }, { expiresIn: '10days' });
     return new SuccessResponse('success', { accessToken, refreshToken }).send(res);
   },
 
@@ -86,7 +56,7 @@ export const AuthController = {
     }
     const { decoded }:any = await verifyJWT(value.refreshToken);
     const user = UserService.findUserByEmail(decoded._doc.email);
-    if (!user) return false;
+    if (!user) return new NotFoundResponse('Not found user').send(res)
     const accessToken = signJWT({ ...user }, {
       expiresIn: '1d'
     });
