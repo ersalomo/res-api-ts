@@ -1,0 +1,1 @@
+{"version":3,"file":"BadTokenError .js","sourceRoot":"","sources":["../../../../src/responses/ApiError/BadTokenError .ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,uDAEoB;AAEpB,MAAa,aAAc,SAAQ,kBAAQ;IACzC,YAAY,OAAO,GAAG,oBAAoB;QACxC,KAAK,CAAC,oBAAS,CAAC,SAAS,EAAE,OAAO,CAAC,CAAC;IACtC,CAAC;CACF;AAJD,sCAIC"}

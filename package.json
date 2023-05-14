@@ -12,11 +12,6 @@
     "test": "jest --detectOpenHandles",
     "format": "prettier --write ."
   },
-  "pre-commit": [
-      "ts.check",
-      "build",
-      "add-build"
-  ],
   "keywords": [],
   "author": "Ersalomo Sitorus",
   "license": "ISC",
