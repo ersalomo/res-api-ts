@@ -1,0 +1,1 @@
+{"version":3,"file":"AccessTokenError .js","sourceRoot":"","sources":["../../../../src/responses/ApiError/AccessTokenError .ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AAAA,uDAEoB;AAEpB,MAAqB,gBAAiB,SAAQ,kBAAQ;IACpD,YAAY,OAAO,GAAG,sBAAsB;QAC1C,KAAK,CAAC,oBAAS,CAAC,YAAY,EAAE,OAAO,CAAC,CAAC;IACzC,CAAC;CACF;AAJD,mCAIC"}
