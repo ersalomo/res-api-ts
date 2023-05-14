@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken';
 import { logger } from './loggers';
 import CONFIG from '../config/environment';
+import AccessTokenError from '../responses/ApiError/AccessTokenError ';
 
 export const signJWT = async (payload: Object, options?: jwt.SignOptions | undefined) => {
-  const privateKey = await CONFIG.jwt_private_key() || CONFIG.PRIVATE_KEY
+  const privateKey = CONFIG.PRIVATE_KEY || await CONFIG.jwt_private_key()
+  if (!privateKey) throw new AccessTokenError('Missing private key')
   return jwt.sign(payload, privateKey, {
     ...(options && options),
     algorithm: 'RS256',
@@ -11,7 +13,7 @@ export const signJWT = async (payload: Object, options?: jwt.SignOptions | undef
 }
 
 export const verifyJWT = async (token: string) => {
-  const publicKey = await CONFIG.jwt_public_key() || CONFIG.PUBLIC_KEY
+  const publicKey = CONFIG.PUBLIC_KEY || await CONFIG.jwt_public_key()
   try {
     const decoded = jwt.verify(token, publicKey);
     return {

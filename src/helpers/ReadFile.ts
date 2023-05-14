@@ -9,7 +9,7 @@ export async function readPublicKey():Promise<string> {
   );
 }
 
-export async function readPrivateKey():Promise<string> {
+export async function readPrivateKey():Promise<string |undefined> {
   return promisify(readFile)(
     path.join(__dirname, '../../keys/private.pem'),
     'utf-8'
