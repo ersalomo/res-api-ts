@@ -9,6 +9,7 @@ import AuthFailureResponse from '../responses/ApiResponse/AuthFailureResponse '
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
 import BadPayloadRequest from '../responses/ApiResponse/BadPayloadRequest'
 import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
+import BadRequestResponse from '../responses/ApiResponse/BadRequestResponse ';
 
 export const AuthController = {
   async createUser(req: Request, res: Response):Promise<any> {
@@ -31,18 +32,13 @@ export const AuthController = {
 
   async createSession(req: Request, res: Response): Promise<any> {
     const { error, value } = UserValidate.loginValidate(req.body);
-    if (error) {
-      return res.status(400).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: error.details[0].message
-      });
-    }
+    if (error) return new BadRequestResponse(error.details[0].message).send(res)
+
     const user: any = await UserService.findUserByEmail(value.email);
     if (!user) return new NotFoundResponse('Not found user').send(res)
 
     const isValid = checkPassword(value.password, user.password)
-    if (!isValid) new AuthFailureResponse('Invalid email or password').send(res);
+    if (!isValid) return new AuthFailureResponse('Invalid email or password').send(res);
 
     const accessToken = await signJWT({ ...user }, { expiresIn: '1d' });
     const refreshToken = await signJWT({ ...user }, { expiresIn: '10days' });

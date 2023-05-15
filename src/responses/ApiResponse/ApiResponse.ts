@@ -44,7 +44,9 @@ export default abstract class ApiResponse {
       logger.info(`Info [${value}]`)
       res.append(key, val);
     })
-    return res.status(this.status).json(ApiResponse.sanitize(response));
+    return res
+      .status(this.status)
+      .json(ApiResponse.sanitize(response));
   }
 
   public send(res: Response, headers: {[key:string]: string} = {}): Response {
@@ -63,7 +65,6 @@ export default abstract class ApiResponse {
     // Object.entries(clone).forEach((value) => {
     //   if (typeof value === 'undefined') delete clone[value];
     // })
-
     return clone;
   }
 }
