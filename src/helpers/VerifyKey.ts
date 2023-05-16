@@ -1,4 +1,5 @@
 import forge from 'node-forge'
+import { logger } from '../utils/loggers';
 
 function isPrivateKeyValid(privateKey: string): boolean {
   try {
@@ -14,7 +15,7 @@ function isPublicKeyValid(publicKey:string):boolean {
     forge.pki.publicKeyFromPem(publicKey);
     return true;
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     return false;
   }
 }

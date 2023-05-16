@@ -36,13 +36,13 @@ describe('Configuration Test', () => {
     expect(typeof CONFIG.PUBLIC_KEY).toBe('string');
   });
   test('jwt_private_key configuration should be a private key', async () => {
-    const privateKey = await CONFIG.jwt_private_key();
+    const privateKey = CONFIG.PRIVATE_KEY || await CONFIG.jwt_private_key();
     const isPrivateKey = isPrivateKeyValid(`${privateKey}`);
     expect(isPrivateKey).toBe(true);
   });
 
   test('jwt_public_key configuration should be a public key', async () => {
-    const publicKey = await CONFIG.jwt_public_key();
+    const publicKey = CONFIG.PUBLIC_KEY || await CONFIG.jwt_public_key();
     const isPublicKey = isPublicKeyValid(`${publicKey}`);
     expect(isPublicKey).toBe(true);
   });
