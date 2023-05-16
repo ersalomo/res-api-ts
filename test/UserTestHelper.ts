@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 import UserType from '../src/types/user.type';
-import { UserService } from '../src/services/auth.srv';
+import { UserService } from '../src/database/services/auth.srv';
 
 const UserTestHelper = {
   async addUser(user:UserType = {

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyJWT } from '../utils/jwt';
-import AccessTokenError from '../responses/ApiError/AccessTokenError ';
+import { verifyJWT } from '../../utils/jwt';
+import AccessTokenError from '../../http/responses/ApiError/AccessTokenError ';
 // import AccessTokenErrorResponse from '../responses/ApiResponse/AccessTokenErrorResponse ';
 
 const deserializedToken = async (req: Request, res: Response, next: NextFunction) => {

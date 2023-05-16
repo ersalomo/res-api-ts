@@ -1,13 +1,13 @@
 import express, { Application, Request, Response, NextFunction } from 'express'
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import deserializedToken from '../middleware/deserializedToken'
+import deserializedToken from '../http/middleware/deserializedToken'
 import routes from '../routes';
-import ApiError, { ErrorType } from '../responses/ApiError/ApiError';
+import ApiError, { ErrorType } from '../http/responses/ApiError/ApiError';
 import { logger } from './loggers';
 import CONFIG from '../config/environment';
-import InternalError from '../responses/ApiError/InternalError ';
-import NotFoundError from '../responses/ApiError/NotFoundError ';
+import InternalError from '../http/responses/ApiError/InternalError ';
+import NotFoundError from '../http/responses/ApiError/NotFoundError ';
 
 process.on('uncaughtException', (err) => {
   logger.error(err)

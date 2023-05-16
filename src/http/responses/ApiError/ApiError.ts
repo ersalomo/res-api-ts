@@ -7,7 +7,7 @@ import InternalErrorResponse from '../ApiResponse/InternalErrorResponse ';
 import NotFoundResponse from '../ApiResponse/NotFoundResponse ';
 import BadRequestResponse from '../ApiResponse/BadRequestResponse ';
 import ForbiddenResponse from '../ApiResponse/ForbiddenResponse ';
-import CONFIG from '../../config/environment';
+import CONFIG from '../../../config/environment';
 
 export enum ErrorType {
   BAD_TOKEN = 'BadTokenError',

@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import ProductController from '../controllers/product.controller'
-import { AuthMiddleware } from '../middleware/auth'
+import ProductController from '../http/controllers/product.controller'
+import { AuthMiddleware } from '../http/middleware/auth'
 import AsyncHandler from '../helpers/AsyncHandler'
 
 export const ProductRouter: Router = Router()

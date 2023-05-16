@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import { Response } from 'express';
-import { logger } from '../../utils/loggers';
+import { logger } from '../../../utils/loggers';
 
 // Helper code for the API consumer to understand the error and handle is accordingly
 export enum StatusCode {

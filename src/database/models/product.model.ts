@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import ProductType from '../types/products.types';
+import ProductType from '../../types/products.types';
 
 const PRODUCT_DOC = 'products'
 

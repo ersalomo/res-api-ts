@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import ProductType from '../types/products.types'
+import ProductType from '../../types/products.types'
 
 export const createProductValidate = (payload: ProductType) => {
   const schema = Joi.object({

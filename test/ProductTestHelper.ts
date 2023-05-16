@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import ProductService from '../src/services/product.srv'
+import ProductService from '../src/database/services/product.srv'
 import ProductType from '../src/types/products.types'
 
 const ProductTestHelper = {

@@ -1,15 +1,15 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
-import { UserValidate } from '../validations/user.validation'
-import { UserService } from '../services/auth.srv'
-import { hashing, checkPassword } from '../utils/hashing';
-import { verifyJWT, signJWT } from '../utils/jwt';
-import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
-import AuthFailureResponse from '../responses/ApiResponse/AuthFailureResponse '
-import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
-import BadPayloadRequest from '../responses/ApiResponse/BadPayloadRequest'
-import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
-import BadRequestResponse from '../responses/ApiResponse/BadRequestResponse ';
+import { UserValidate } from '../../http/validations/user.validation'
+import { UserService } from '../../database/services/auth.srv'
+import { hashing, checkPassword } from '../../utils/hashing';
+import { verifyJWT, signJWT } from '../../utils/jwt';
+import NotFoundResponse from '../../http/responses/ApiResponse/NotFoundResponse '
+import AuthFailureResponse from '../../http/responses/ApiResponse/AuthFailureResponse '
+import SuccessResponse from '../../http/responses/ApiResponse/SuccessResponse'
+import BadPayloadRequest from '../../http/responses/ApiResponse/BadPayloadRequest'
+import SuccessMsgResponse from '../../http/responses/ApiResponse/SuccessMsgResponse '
+import BadRequestResponse from '../../http/responses/ApiResponse/BadRequestResponse ';
 
 export const AuthController = {
   async createUser(req: Request, res: Response):Promise<any> {

@@ -6,7 +6,7 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { v4 as uuidv4 } from 'uuid'
 import createServer from '../utils/server';
 import { hashing } from '../utils/hashing';
-import { UserService } from '../services/auth.srv';
+import { UserService } from '../database/services/auth.srv';
 
 const app = createServer()
 

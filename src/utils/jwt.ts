@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import CONFIG from '../config/environment';
-import AccessTokenError from '../responses/ApiError/AccessTokenError ';
+import AccessTokenError from '../http/responses/ApiError/AccessTokenError ';
 
 export const signJWT = async (payload: Object, options?: jwt.SignOptions | undefined) => {
   const privateKey = CONFIG.PRIVATE_KEY || await CONFIG.jwt_private_key()

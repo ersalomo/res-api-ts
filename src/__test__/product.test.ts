@@ -7,11 +7,11 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { v4 as uuidv4 } from 'uuid'
 import ProductType from '../types/products.types';
 import createServer from '../utils/server';
-import ProductService from '../services/product.srv';
+import ProductService from '../database/services/product.srv';
 // import { AuthController } from '../controllers/auth.controller';
 // import ServerTestHelper from '../../test/ServerTestHelper';
 import { hashing } from '../utils/hashing';
-import { UserService } from '../services/auth.srv';
+import { UserService } from '../database/services/auth.srv';
 import { logger } from '../utils/loggers';
 
 const app = createServer();

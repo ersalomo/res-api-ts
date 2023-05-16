@@ -9,7 +9,7 @@
     "build": "rimraf public && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add public",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --detectOpenHandles --coverage",
     "format": "prettier --write ."
   },
   "keywords": [],

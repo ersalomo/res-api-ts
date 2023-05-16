@@ -1,4 +1,4 @@
-import ProductType from '../../types/products.types';
+import ProductType from '../../../types/products.types';
 // import { createProductValidate, updateProductValidate } from '../product.validation';
 import * as validator from '../product.validation';
 

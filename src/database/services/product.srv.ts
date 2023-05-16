@@ -1,6 +1,6 @@
 import { productModel } from '../models/product.model'
-import { logger } from '../utils/loggers'
-import ProductType from '../types/products.types'
+import { logger } from '../../utils/loggers'
+import ProductType from '../../types/products.types'
 
 export default class ProductService {
   static async getProducts() {

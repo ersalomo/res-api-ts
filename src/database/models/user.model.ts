@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import UserType from '../types/user.type';
+import UserType from '../../types/user.type';
 
 const USER_DOCUMENT = 'users'
 

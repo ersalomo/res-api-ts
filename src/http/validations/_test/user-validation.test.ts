@@ -1,5 +1,5 @@
 import { UserValidate } from '../user.validation';
-import UserType from '../../types/user.type';
+import UserType from '../../../types/user.type';
 
 describe('user-validate', () => {
   it('it should validate the user payload correctly', async () => {
