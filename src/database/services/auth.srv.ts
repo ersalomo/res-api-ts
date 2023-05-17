@@ -1,6 +1,6 @@
 import { UserModel } from '../models/user.model';
 import { logger } from '../../utils/loggers';
-import UserType from '../../types/user.type';
+import UserType from '../types/user.type';
 
 export const UserService = {
   async createUser(payload: UserType) {

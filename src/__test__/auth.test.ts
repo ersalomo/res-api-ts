@@ -4,7 +4,7 @@ import supertest from 'supertest';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { v4 as uuidv4 } from 'uuid'
-import createServer from '../utils/server';
+import createServer from '../server';
 import { hashing } from '../utils/hashing';
 import { UserService } from '../database/services/auth.srv';
 

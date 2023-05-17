@@ -10,6 +10,6 @@ AuthRouter.post('/register', AsyncHandler(AuthController.createUser))
 /**
  * user authenticated
 */
-AuthRouter.use('/users', AuthMiddleware.requireUser)
+AuthRouter.use('/users', AsyncHandler(AuthMiddleware.requireUser))
 AuthRouter.get('/users', AsyncHandler(AuthController.getUser))
 AuthRouter.post('/users/refresh-token', AsyncHandler(AuthController.refreshSession),)

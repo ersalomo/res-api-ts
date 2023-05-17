@@ -1,16 +1,13 @@
+import { ParsedQs } from 'qs'
 import { productModel } from '../models/product.model'
-import { logger } from '../../utils/loggers'
-import ProductType from '../../types/products.types'
+import ProductType from '../types/products.types'
 
 export default class ProductService {
-  static async getProducts() {
-    return await productModel
-      .find()
-      .then((data) => {
-        return data
-      }).catch((error) => {
-        logger.error(error)
-      })
+  static async getProducts(options?: { name?: string | ParsedQs, id?:string}) {
+    const { name } = options || {}
+    const searchQuery = typeof name === 'string'
+      ? { name: { $regex: name, $options: 'i' } } : {};
+    return await productModel.find(searchQuery)
   }
 
   static async addProduct(payload:ProductType) {
@@ -29,5 +26,3 @@ export default class ProductService {
     return await productModel.findOneAndDelete({ product_id: id })
   }
 }
-
-// Promise<ProductType[]>

@@ -1,5 +1,5 @@
 import { CartModel } from '../models/cart.model';
-import CartType from '../../types/cart.type';
+import CartType from '../types/cart.type';
 
 export const CartService = {
   async addToCart(payload: CartType) {

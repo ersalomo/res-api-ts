@@ -1,5 +1,5 @@
 import { OrderModel } from '../models/order.mode';
-import OrderType, { StatusOrder } from '../../types/order.type';
+import OrderType, { StatusOrder } from '../types/order.type';
 
 const OrderService = {
   async createOrder(payload: OrderType) {

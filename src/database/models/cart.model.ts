@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import CartType from '../../types/cart.type';
+import CartType from '../types/cart.type';
 
 const CART_DOC = 'Cart';
 const COLECTION_NAME = 'carts';

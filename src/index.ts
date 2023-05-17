@@ -1,6 +1,6 @@
 import { logger } from './utils/loggers'
 import './utils/connectDB'
-import createServer from './utils/server'
+import createServer from './server'
 
 const app = createServer()
 const port: number = Number(process.env.PORT) || 4000

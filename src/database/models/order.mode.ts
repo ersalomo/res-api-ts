@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import OrderType from '../../types/order.type';
+import OrderType from '../types/order.type';
 
 const DOC_NAME = 'Order';
 const COLLECT_NAME = 'orders';

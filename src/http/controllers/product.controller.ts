@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { createProductValidate } from '../validations/product.validation'
 import ProductService from '../../database/services/product.srv'
 import { logger } from '../../utils/loggers'
-import ProductType from '../../types/products.types'
+import ProductType from '../../database/types/products.types'
 import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
 import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
@@ -22,19 +22,8 @@ export default class ProductController {
   }
 
   static async getProducts(req: Request, res: Response) {
-    const products:any = await ProductService.getProducts()
-    const { name } = req.params // id?
-    let filteredProducts = products;
-    if (name) {
-      logger.info(name)
-      filteredProducts = products.filter((product: ProductType) => {
-        return product.name.toLowerCase().includes(name.toLowerCase());
-      })
-      if (filteredProducts || filteredProducts.length < 1) {
-        return new NotFoundResponse();
-      }
-      return new SuccessResponse('success', filteredProducts).send(res)
-    }
+    const name = req.query?.name as string
+    const products:any = await ProductService.getProducts({ name })
     return new SuccessResponse('success', products).send(res)
   }
 

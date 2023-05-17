@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import UserType from '../../types/user.type'
+import UserType from '../../database/types/user.type'
 
 export const UserValidate = {
   createUserValidate(payload: UserType) {
