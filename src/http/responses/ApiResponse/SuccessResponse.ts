@@ -6,7 +6,7 @@ import ApiResponse, {
 
 export default class SuccessResponse<T> extends ApiResponse {
   // eslint-disable-next-line no-unused-vars
-  constructor(message: string, private data: T, private statusCode = 201) {
+  constructor(message: string, private data: T) {
     super(StatusCode.SUCCESS, ResponseStatus.SUCCESS, message);
   }
 

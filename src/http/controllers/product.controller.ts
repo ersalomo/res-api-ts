@@ -24,6 +24,7 @@ export default class ProductController {
   static async getProducts(req: Request, res: Response) {
     const name = req.query?.name as string
     const products:any = await ProductService.getProducts({ name })
+    if (!products) return new NotFoundResponse('Not products found');
     return new SuccessResponse('success', products).send(res)
   }
 
