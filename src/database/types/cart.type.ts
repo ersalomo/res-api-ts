@@ -1,8 +1,6 @@
-import { Schema } from 'mongoose'
-
 export default interface CartType {
-  cart_id: Schema.Types.String,
-  user_id: Schema.Types.ObjectId,
-  product_id: Schema.Types.ObjectId,
+  cart_id: string,
+  user_id: string,
+  product_id: string,
   count?: number
 }

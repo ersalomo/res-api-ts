@@ -7,10 +7,10 @@ import ApiError, { ErrorType } from './http/responses/ApiError/ApiError';
 import { logger } from './utils/loggers';
 import CONFIG from './config/environment';
 import InternalError from './http/responses/ApiError/InternalError ';
-import NotFoundError from './http/responses/ApiError/NotFoundError ';
+import NotFoundResponse from './http/responses/ApiResponse/NotFoundResponse ';
 
 process.on('uncaughtException', (err) => {
-  logger.error(err)
+  logger.error(`'Error =>'  ${err}`)
 })
 const createServer = () => {
   const app: Application = express();
@@ -30,7 +30,7 @@ const createServer = () => {
   app.use(deserializedToken)
   // catch 404 and foware to error handler
   routes(app)
-  app.use((req, res, next) => next(new NotFoundError('Not Found Expception')))
+  app.use((req, res, next) => next(new NotFoundResponse('Not Found Expception').send(res)))
 
   // eslint-disable-next-line consistent-return
   app.use((err: Error, req: Request, res: Response, next:NextFunction) => {

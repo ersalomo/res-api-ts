@@ -3,7 +3,7 @@ import CartType from '../types/cart.type';
 
 const CART_DOC = 'Cart';
 const COLECTION_NAME = 'carts';
-const { String, ObjectId } = mongoose.Schema.Types
+// const { String, ObjectId } = mongoose.Schema.Types
 
 export const CartSchema = new mongoose.Schema<CartType>({
   cart_id: {
@@ -11,10 +11,10 @@ export const CartSchema = new mongoose.Schema<CartType>({
     unique: true,
   },
   user_id: {
-    type: ObjectId,
+    type: String,
   },
   product_id: {
-    type: ObjectId,
+    type: String,
   }
 }, {
   timestamps: true,
