@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import { Response } from 'express';
-import AuthFailureResponse from '../ApiResponse/AuthFailureResponse ';
-import AccessTokenErrorResponse from '../ApiResponse/AccessTokenErrorResponse ';
-import InternalErrorResponse from '../ApiResponse/InternalErrorResponse ';
-import NotFoundResponse from '../ApiResponse/NotFoundResponse ';
-import BadRequestResponse from '../ApiResponse/BadRequestResponse ';
-import ForbiddenResponse from '../ApiResponse/ForbiddenResponse ';
+import AuthFailureResponse from '../ApiResponse/AuthFailureResponse';
+import AccessTokenErrorResponse from '../ApiResponse/AccessTokenErrorResponse';
+import InternalErrorResponse from '../ApiResponse/InternalErrorResponse';
+import NotFoundResponse from '../ApiResponse/NotFoundResponse';
+import BadRequestResponse from '../ApiResponse/BadRequestResponse';
+import ForbiddenResponse from '../ApiResponse/ForbiddenResponse';
 import CONFIG from '../../../config/environment';
 
 export enum ErrorType {

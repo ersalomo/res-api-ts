@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyJWT } from '../../utils/jwt';
-import AccessTokenError from '../../http/responses/ApiError/AccessTokenError ';
-// import AccessTokenErrorResponse from '../responses/ApiResponse/AccessTokenErrorResponse ';
+import BadTokenError from '../responses/ApiError/BadTokenError';
 
 const deserializedToken = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.headers.authorization?.replace(/^Bearer\s/, '');
@@ -12,14 +11,10 @@ const deserializedToken = async (req: Request, res: Response, next: NextFunction
   */
 
   if (!accessToken) return next()
-  const { decoded, expired } = await verifyJWT(accessToken);
+  const { decoded } = await verifyJWT(accessToken);
 
-  if (decoded) {
-    res.locals.user = decoded;
-    return next()
-  }
-  if (expired) throw new AccessTokenError()
-
+  if (!decoded) return next(new BadTokenError());
+  res.locals.user = decoded;
   return next();
 }
 

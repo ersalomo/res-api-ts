@@ -16,7 +16,7 @@ export default class AccessTokenErrorResponse extends ApiResponse {
   }
 
   send(res: Response, headers: { [key:string]: string } = {}): Response {
-    headers.instruction = this.instruction
+    // headers.instruction = this.instruction
     return super.prepare<AccessTokenErrorResponse>(res, this, headers)
   }
 }

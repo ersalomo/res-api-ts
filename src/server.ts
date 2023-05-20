@@ -6,8 +6,9 @@ import routes from './routes';
 import ApiError, { ErrorType } from './http/responses/ApiError/ApiError';
 import { logger } from './utils/loggers';
 import CONFIG from './config/environment';
-import InternalError from './http/responses/ApiError/InternalError ';
-import NotFoundResponse from './http/responses/ApiResponse/NotFoundResponse ';
+import InternalError from './http/responses/ApiError/InternalError';
+import NotFoundResponse from './http/responses/ApiResponse/NotFoundResponse';
+import AsyncHandler from './helpers/AsyncHandler';
 
 process.on('uncaughtException', (err) => {
   logger.error(`'Error =>'  ${err}`)
@@ -27,7 +28,7 @@ const createServer = () => {
     res.setHeader('Access-Control-Allow-Headers', '*')
     next()
   })
-  app.use(deserializedToken)
+  app.use(AsyncHandler(deserializedToken))
   // catch 404 and foware to error handler
   routes(app)
   app.use((req, res, next) => next(new NotFoundResponse('Not Found Expception').send(res)))

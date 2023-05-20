@@ -5,7 +5,7 @@ export default class CartService {
   private _model = CartModel
 
   public async index() {
-    return await this._model.find()
+    return this._model.find()
   }
 
   public async addToCart(payload: CartType) {
@@ -18,5 +18,9 @@ export default class CartService {
 
   async addCountProduct(id:string, count:number) {
     return await this._model.updateOne({ cart_id: id }, { $inc: { count } })
+  }
+
+  async veryfyCartUser(idCart:string, userId: string) {
+    return this._model.findOne({ cart_id: idCart, user_id: userId })
   }
 }

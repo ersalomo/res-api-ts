@@ -15,7 +15,11 @@ export const CartSchema = new mongoose.Schema<CartType>({
   },
   product_id: {
     type: String,
-  }
+  },
+  count: {
+    type: Number,
+    default: 1,
+  },
 }, {
   timestamps: true,
 });

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import ForbiddenResponse from '../../http/responses/ApiResponse/ForbiddenResponse ';
+import ForbiddenResponse from '../responses/ApiResponse/ForbiddenResponse';
 
 export const AuthMiddleware = {
   async requireUser(req: Request, res: Response, next: NextFunction) {

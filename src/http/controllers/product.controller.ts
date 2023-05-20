@@ -4,9 +4,9 @@ import { createProductValidate } from '../validations/product.validation'
 import ProductService from '../../database/services/product.srv'
 import { logger } from '../../utils/loggers'
 import ProductType from '../../database/types/products.types'
-import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse '
+import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse'
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse'
-import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse '
+import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse'
 import BadPayloadRequest from '../responses/ApiResponse/BadPayloadRequest'
 
 export default class ProductController {

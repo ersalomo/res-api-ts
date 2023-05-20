@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { v4 as uuid } from 'uuid'
 import CartService from '../../database/services/cart.service';
 import ProductService from '../../database/services/product.srv';
-import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse ';
-import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse ';
+import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse';
+import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse';
 import { logger } from '../../utils/loggers';
 import SuccessResponse from '../responses/ApiResponse/SuccessResponse';
 
@@ -29,8 +29,17 @@ export default class CartController {
       user_id: user._doc.user_id,
       count: 1,
     }
-    logger.info(`cart controlrt${this._cartService}`)
     await this._cartService.addToCart(cart)
     return new SuccessMsgResponse('cart inserted').send(res)
+  }
+
+  public deleteCartUser = async (req: Request, res: Response) => {
+    const { id: cartId } = req.params
+    const { user } = res.locals
+    const cart = await this._cartService.veryfyCartUser(cartId, user.user_id)
+    logger.info(`${cart}`)
+    if (!cart) return new NotFoundResponse('cart not found').send(res)
+    await this._cartService.removeFromCart(cartId)
+    return new SuccessMsgResponse('cart deleted').send(res)
   }
 }

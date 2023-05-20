@@ -1,7 +1,8 @@
 import { logger } from './utils/loggers'
-import './utils/connectDB'
 import createServer from './server'
+import { initializeMongoDB } from './utils/initialize-mongo'
 
+initializeMongoDB()
 const app = createServer()
 const port: number = Number(process.env.PORT) || 4000
 

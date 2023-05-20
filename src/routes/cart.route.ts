@@ -8,5 +8,6 @@ const cartController = new CartController()
 
 CartRouter.get('/', AsyncHandler(cartController.getCarts))
 CartRouter.post('/:id', AsyncHandler(AuthMiddleware.requireUser, cartController.insertToCart))
+CartRouter.delete('/:id', AsyncHandler(AuthMiddleware.requireUser, cartController.deleteCartUser))
 
 export { CartRouter }
