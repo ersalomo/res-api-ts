@@ -31,7 +31,7 @@ const createServer = () => {
   app.use(AsyncHandler(deserializedToken))
   // catch 404 and foware to error handler
   routes(app)
-  app.use((req, res, next) => next(new NotFoundResponse('Not Found Expception').send(res)))
+  app.use((req, res, next) => next(new NotFoundResponse('Not Found').send(res)))
 
   // eslint-disable-next-line consistent-return
   app.use((err: Error, req: Request, res: Response, next:NextFunction) => {
