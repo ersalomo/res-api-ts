@@ -1,15 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
-import { Document } from 'mongoose';
+import { Schema } from 'mongoose'
 
 export enum StatusOrder {
-  WAITING_PAYMENT = 'WAITING_PAYMENT',
+  WAITING = 'WAITING_PAYMENT',
   PAID = 'PAID',
   CANCELED = 'CANCELED',
 }
 
-export default interface OrderType extends Document {
-  order_id: string,
+export default interface OrderType {
+  _id: Schema.Types.ObjectId,
   user_id: string,
   product_id: string,
   status: StatusOrder

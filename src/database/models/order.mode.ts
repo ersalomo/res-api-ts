@@ -1,14 +1,16 @@
 import { Schema, model } from 'mongoose';
-import OrderType from '../types/order.type';
+import OrderType, { StatusOrder } from '../types/order.type';
 
 const DOC_NAME = 'Order';
 const COLLECT_NAME = 'orders';
 
 const schema = new Schema<OrderType>({
-  order_id: Schema.Types.String,
   user_id: Schema.Types.ObjectId,
   product_id: Schema.Types.ObjectId,
-  status: Schema.Types.String
+  status: {
+    type: Schema.Types.String,
+    enum: Object.values(StatusOrder),
+  }
 }, {
   timestamps: true
 });

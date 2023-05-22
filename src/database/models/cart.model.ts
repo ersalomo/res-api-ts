@@ -6,10 +6,6 @@ const COLECTION_NAME = 'carts';
 // const { String, ObjectId } = mongoose.Schema.Types
 
 export const CartSchema = new mongoose.Schema<CartType>({
-  cart_id: {
-    type: String,
-    unique: true,
-  },
   user_id: {
     type: String,
   },
