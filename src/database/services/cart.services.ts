@@ -7,7 +7,7 @@ type Cart = CartType & {
   _id: Types.ObjectId
 }
 
-export default class CartService {
+export default class CartServices {
   private _model = CartModel
 
   public async index() {

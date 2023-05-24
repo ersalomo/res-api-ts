@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Types } from 'mongoose';
-import CartService from '../../database/services/cart.service';
+import CartServices from '../../database/services/cart.services';
 import ProductService from '../../database/services/product.srv';
 import SuccessMsgResponse from '../responses/ApiResponse/SuccessMsgResponse';
 import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse';
@@ -9,7 +9,7 @@ import SuccessResponse from '../responses/ApiResponse/SuccessResponse';
 import CartType from '../../database/types/cart.type';
 
 export default class CartController {
-  private _cartService : CartService = new CartService();
+  private _cartService : CartServices = new CartServices();
 
   private _productService = ProductService
 

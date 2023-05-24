@@ -13,10 +13,7 @@ export default class ProductController {
   static async createProduct(req: Request, res: Response):Promise<any> {
     req.body.product_id = uuidv4()
     const { error, value } = createProductValidate(req.body)
-    if (error) {
-      logger.error('Err: product-create', error.details[0].message);
-      return new BadPayloadRequest(error.details[0].message).send(res);
-    }
+    if (error) return new BadPayloadRequest(error.details[0].message).send(res);
     await ProductService.addProduct(value)
     return new SuccessResponse('product created', value).send(res)
   }
@@ -33,14 +30,7 @@ export default class ProductController {
   Promise<Response<any, Record<string, any>>> {
     const { id } = req.params
     const { error, value } = createProductValidate(req.body)
-    if (error) {
-      return res.status(422).send({
-        status: false,
-        statusCode: res.statusCode,
-        message: error.details[0].message
-      });
-    }
-    // await updateProductById(id, value)
+    if (error) return new BadPayloadRequest(error.details[0].message).send(res)
     await ProductService.update(id, value)
     return new SuccessMsgResponse('product updated').send(res)
   }
@@ -63,32 +53,16 @@ export default class ProductController {
 
   static async detailProduct(req:Request, res: Response) {
     const { id } = req.params
-    const result:any = await ProductService.findProduct(id)
-    if (result) {
-      return new SuccessResponse(
-        'success',
-        result
-      ).send(res);
-    }
-    return res.status(404).send({
-      status: false,
-      statusCode: res.statusCode,
-      message: 'Product not found'
-    });
+    const result = await ProductService.findProduct(id)
+    if (!result) new NotFoundResponse('Product not found').send(res)
+    return new SuccessResponse('Product deleted', result).send(res)
   }
 
   static async deleteProduct(req:Request, res:Response) {
     const { id } = req.params;
-    logger.info('Delete Product...')
-    const response = await ProductService.delete(id)
-    if (response) {
-      logger.info('Response Delete', response)
-      return new SuccessMsgResponse('Product berhasil dihapus').send(res)
-    }
-    return res.status(422).send({
-      status: false,
-      statusCode: res.statusCode,
-      message: 'Product tidak ditemukan'
-    });
+    const product = await ProductService.findProduct(id)
+    if (!product) return new NotFoundResponse('Product not found').send(res)
+    await ProductService.delete(id)
+    return new SuccessMsgResponse('Product deleted').send(res)
   }
 }

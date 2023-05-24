@@ -11,7 +11,7 @@ import ProductService from '../database/services/product.srv';
 // import { AuthController } from '../controllers/auth.controller';
 // import ServerTestHelper from '../../test/ServerTestHelper';
 import { hashing } from '../utils/hashing';
-import { UserService } from '../database/services/auth.srv';
+import { UserService } from '../database/services/auth.services';
 
 const app = createServer();
 

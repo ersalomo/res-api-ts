@@ -11,4 +11,8 @@ export default class OrderService {
   async updateStatusOrder(id: string, status:StatusOrder) {
     return this._model.updateOne({ order_id: id }, { status })
   }
+
+  async getOrdersByIdUser(id: string) {
+    return this._model.find({ user_id: id })
+  }
 }

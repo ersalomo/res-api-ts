@@ -7,7 +7,7 @@ export default class ProductService {
     const { name } = options || {}
     const searchQuery = typeof name === 'string'
       ? { name: { $regex: name, $options: 'i' } } : {};
-    return await productModel.find(searchQuery)
+    return productModel.find(searchQuery)
   }
 
   static async addProduct(payload:ProductType) {
@@ -15,14 +15,14 @@ export default class ProductService {
   }
 
   static async findProduct(id:string):Promise<Partial<ProductType> | null> {
-    return await productModel.findOne({ product_id: id })
+    return productModel.findOne({ product_id: id })
   }
 
   static async update(id:string, data:ProductType) {
-    return await productModel.findOneAndUpdate({ product_id: id }, { $set: data })
+    return productModel.findOneAndUpdate({ product_id: id }, { $set: data })
   }
 
   static async delete(id:string) {
-    return await productModel.findOneAndDelete({ product_id: id })
+    return productModel.findOneAndDelete({ product_id: id })
   }
 }

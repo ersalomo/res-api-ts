@@ -4,11 +4,8 @@ import { AuthMiddleware } from '../http/middleware/auth'
 import AsyncHandler from '../helpers/AsyncHandler'
 
 export const ProductRouter: Router = Router()
-// ProductRouter.use(AsyncHandler)
-// ProductRouter.use('/', AuthMiddleware.requireUser)
-ProductRouter.get('/:name', AsyncHandler(ProductController.getProducts))
 ProductRouter.get('/', AsyncHandler(ProductController.getProducts))
-// ProductRouter.get('/{name}', ProductController.getProduct)
+ProductRouter.get('/:name', AsyncHandler(ProductController.getProducts))
 ProductRouter.get('/:id/detail', AsyncHandler(ProductController.detailProduct))
 
 ProductRouter.post(

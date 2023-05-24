@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 import { UserValidate } from '../../http/validations/user.validation'
-import { UserService } from '../../database/services/auth.srv'
+import { UserService } from '../../database/services/auth.services'
 import { hashing, checkPassword } from '../../utils/hashing';
 import { verifyJWT, signJWT } from '../../utils/jwt';
 import NotFoundResponse from '../responses/ApiResponse/NotFoundResponse'
