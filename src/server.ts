@@ -7,8 +7,9 @@ import ApiError, { ErrorType } from './http/responses/ApiError/ApiError';
 import { logger } from './utils/loggers';
 import CONFIG from './config/environment';
 import InternalError from './http/responses/ApiError/InternalError';
-import NotFoundResponse from './http/responses/ApiResponse/NotFoundResponse';
+import NoEntryError from './http/responses/ApiError/NoEntryError';
 import AsyncHandler from './helpers/AsyncHandler';
+import InternalErrorResponse from './http/responses/ApiResponse/InternalErrorResponse';
 
 process.on('uncaughtException', (err) => {
   logger.error(`'Error =>'  ${err}`)
@@ -17,7 +18,11 @@ const createServer = () => {
   const app: Application = express();
   // parser body req
   app.use(express.json({ limit: '10mb' }))
-  app.use(bodyParser.urlencoded({ limit: '10mb', extended: false, parameterLimit: 5000 }))
+  app.use(bodyParser.urlencoded({
+    limit: '10mb',
+    extended: false,
+    parameterLimit: 5000
+  }))
   app.use(bodyParser.json())
 
   // cors access handler
@@ -31,10 +36,10 @@ const createServer = () => {
   app.use(AsyncHandler(deserializedToken))
   // catch 404 and foware to error handler
   routes(app)
-  app.use((req, res, next) => next(new NotFoundResponse('Not Found').send(res)))
+  app.use((req, res, next) => next(new NoEntryError('Not Found')))
 
   // eslint-disable-next-line consistent-return
-  app.use((err: Error, req: Request, res: Response, next:NextFunction) => {
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof ApiError) {
       ApiError.handle(err, res);
       if (err.type === ErrorType.INTERNAL) {
@@ -44,14 +49,12 @@ const createServer = () => {
       }
     } else {
       logger.error(`500 - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+      if (CONFIG.is_dev) {
+        return res.status(500)
+          .send(err)
+      }
+      ApiError.handle(new InternalError(), res)
     }
-    if (CONFIG.is_dev) {
-      return res.status(500).send({
-        message: 'Internal is under constructor development',
-      })
-    }
-    ApiError.handle(new InternalError(), res)
-    next()
   })
   return app;
 }

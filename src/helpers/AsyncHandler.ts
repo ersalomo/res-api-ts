@@ -16,7 +16,7 @@ export default (...middlewares : Handler[]) => (
     if (index === middlewares.length - 1) {
       await middlewares[index](req, res, next)
     } else {
-      middlewares[index](req, res, async () => {
+      await middlewares[index](req, res, async () => {
         await execMiddleware(index + 1)
       })
     }
