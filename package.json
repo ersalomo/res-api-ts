@@ -10,6 +10,7 @@
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add public",
     "test": "jest --detectOpenHandles --coverage",
+    "test-cart": "jest --detectOpenHandles src/__test__/cart.test.ts",
     "format": "prettier --write ."
   },
   "keywords": [],
