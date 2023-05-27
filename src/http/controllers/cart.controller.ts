@@ -15,7 +15,6 @@ export default class CartController {
 
   public getCarts = async (req: Request, res: Response) => {
     const carts = await this._cartService.index()
-
     return new SuccessResponse('success', carts).send(res)
   }
 

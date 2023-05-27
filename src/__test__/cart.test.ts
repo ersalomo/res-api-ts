@@ -1,12 +1,14 @@
-import supertest from 'supertest';
 import mongoose from 'mongoose';
+import supertest from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import createServer from '../server';
 import { v4 as uuidv4 } from 'uuid';
+import createServer from '../server';
 import { hashing } from '../utils/hashing';
 import { UserService } from '../database/services/auth.services';
 import ProductService from '../database/services/product.srv';
 import ProductType from '../database/types/products.types';
+import CartServices from '../database/services/cart.services';
+import CartType from '../database/types/cart.type';
 
 const app = createServer()
 const user = {
@@ -35,16 +37,40 @@ describe('cart endpoint', () => {
     await mongoose.connect(mongoServer.getUri())
     await UserService.createUser(user)
   })
-  describe('cart/ method[get]', () => {
+  beforeEach(async () => {})
+  afterEach(async () => {})
+
+  describe('should return data carts when making a GET request to /cart/', () => {
     it('should return data carts', async () => {
       const response = await supertest(app)
         .get('/cart/')
-      expect(response.statusCode)
-        .toBe(200)
+      expect(response.statusCode).toBe(200)
+      expect(response.body.data).toEqual([])
+      expect(response.body.data.length).toEqual(0)
+    })
+    it('should return data carts', async () => {
+      const productId = () => 'product-id-123' // stub
+      const product = {
+        product_id: productId(),
+        name: 'my-product',
+        price: 1000,
+        size: 'M'
+      }
+      const cart = {
+        user_id: user.user_id,
+        product_id: product.product_id
+      }
+      await ProductService.addProduct(product as ProductType)
+      await new CartServices().addToCart(cart as CartType)
+      const response = await supertest(app).get('/cart/')
+      expect(response.statusCode).toBe(200)
+      expect(response.body.data).toBeDefined()
+      expect(response.body.data.length).toEqual(1)
+      expect(response.body.data[0]).toHaveProperty('product_id', productId())
     })
   })
 
-  describe('cart/ method[post]', () => {
+  describe('should persist when making a POST request to /cart/', () => {
     it('should return status 403 when user did not login', async () => {
       // Arrange
       // Act
@@ -87,12 +113,6 @@ describe('cart endpoint', () => {
         .send()
       // Assert
       expect(response.statusCode).toBe(201)
-    })
-
-    it('should return data carts', async () => {
-      const response = await supertest(app).get('/cart/')
-      expect(response.statusCode)
-        .toBe(200)
     })
   })
 })
