@@ -9,7 +9,7 @@ export enum StatusOrder {
 }
 
 export default interface OrderType {
-  _id: Schema.Types.ObjectId,
+  id: string,
   user_id: string,
   product_id: string,
   status?: StatusOrder
