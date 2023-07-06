@@ -7,7 +7,7 @@ export default class OrderService {
     return this._model.create({ data: payload })
   }
 
-  async updateStatusOrder(id: string, status:StatusOrder) {
+  async updateStatusOrder(id: string, status:string) {
     return this._model.update({
       where: {
         id,
