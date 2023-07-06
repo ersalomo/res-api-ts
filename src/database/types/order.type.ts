@@ -9,9 +9,9 @@ export enum StatusOrder {
 }
 
 export default interface OrderType {
-  id: String,
-  user_id: String,
-  product_id: String,
-  status?: StatusOrder
-  count: Number
+  id?: String,
+  user_id: string,
+  product_id: string,
+  status?: string
+  count: number
 }

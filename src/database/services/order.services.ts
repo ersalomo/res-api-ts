@@ -1,10 +1,9 @@
-import OrderType, { StatusOrder } from '../types/order.type';
 import prisma from '../../../prisma/prisma-client';
 
 export default class OrderService {
   private _model = prisma.orders
 
-  async createOrder(payload:OrderType) {
+  async createOrder(payload:any) {
     return this._model.create({ data: payload })
   }
 

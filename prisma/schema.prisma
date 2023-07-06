@@ -17,18 +17,18 @@ model carts {
   user_id    String
 }
 
-enum OrderStatus {
-  WAITING  @map("WAITING_PAYMENT")
-  PAID     @map("PAID")
-  CANCELED @map("CANCELED")
-}
+// enum OrderStatus {
+//   WAITING  @map("WAITING_PAYMENT")
+//   PAID     @map("PAID")
+//   CANCELED @map("CANCELED")
+// }
 
 model orders {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
   count      Int
   product_id String
   user_id    String
-  status     OrderStatus?
+  status     String?
 }
 
 model products {
