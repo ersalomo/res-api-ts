@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DB")
+}
+
+model carts {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  v          Int      @map("__v")
+  count      Int
+  createdAt  DateTime @db.Date
+  product_id String
+  updatedAt  DateTime @db.Date
+  user_id    String
+}
+
+enum OrderStatus {
+  WAITING  @map("WAITING_PAYMENT")
+  PAID     @map("PAID")
+  CANCELED @map("CANCELED")
+}
+
+model orders {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  count      Int
+  product_id String
+  user_id    String
+  status     OrderStatus?
+}
+
+model products {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  v          Int      @map("__v")
+  createdAt  DateTime @db.Date
+  name       String
+  price      Int
+  product_id String   @unique(map: "product_id_1")
+  size       String
+  type       String
+  updatedAt  DateTime @db.Date
+}
+
+model transactions {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  order_id   String
+  updated_At DateTime @db.Date
+}
+
+model users {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  createdAt DateTime @db.Date
+  email     String   @unique(map: "email_1")
+  name      String
+  password  String
+  role      String
+  updatedAt DateTime @db.Date
+  user_id   String   @unique(map: "user_id_1")
+}

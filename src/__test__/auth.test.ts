@@ -38,7 +38,7 @@ describe('auth endpoint', () => {
     await mongoose.connection.close()
   })
   describe('when user register', () => {
-    it('should return 422 when payload dont meet specifacition', async () => {
+    it('should return 422 when payload dont meet specification', async () => {
       const payload = {
         // user_id: v4(),
         name: 'Ersalomo',
@@ -49,7 +49,7 @@ describe('auth endpoint', () => {
       const response = await supertest(app).post('/auth/register').send(payload);
       expect(response.statusCode).toBe(422)
     })
-    it('should return 201 when payload meet specifacition', async () => {
+    it('should return 201 when payload meet specification', async () => {
       const payload = {
         // user_id: v4(),
         name: 'Ersalomo',
@@ -62,7 +62,7 @@ describe('auth endpoint', () => {
     })
   })
   describe('when user login', () => {
-    it('should return 400 when payload dont meet specifacition', async () => {
+    it('should return 400 when payload dont meet specification', async () => {
       const payload = {
         email: 'test@example.com',
         password: ''

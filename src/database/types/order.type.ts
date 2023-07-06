@@ -12,5 +12,6 @@ export default interface OrderType {
   _id: Schema.Types.ObjectId,
   user_id: string,
   product_id: string,
-  status: StatusOrder
+  status?: StatusOrder
+  count: number
 }

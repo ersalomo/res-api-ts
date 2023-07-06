@@ -30,12 +30,17 @@ const admin = {
   email: 'user_admin@gmail.com',
   password: hashing('12345678'),
 }
+const adminCreated = {
+  email: 'user_admin@gmail.com',
+  password: '12345678'
+}
 
 describe('cart endpoint', () => {
   beforeAll(async () => {
     const mongoServer = await MongoMemoryServer.create()
     await mongoose.connect(mongoServer.getUri())
     await UserService.createUser(user)
+    // await UserService.createUser(admin)
   })
   beforeEach(async () => {})
   afterEach(async () => {})
@@ -113,6 +118,25 @@ describe('cart endpoint', () => {
         .send()
       // Assert
       expect(response.statusCode).toBe(201)
+    })
+  })
+
+  describe('should persist when making a PUT request to /cart/', () => {
+    // const payload: ProductType = {
+    //   product_id: 'product-123',
+    //   name: 'Baju Sawah',
+    //   price: 1000,
+    //   size: 'XL'
+    // }
+    // beforeAll(async () => {
+    //   await ProductService.addProduct(payload)
+    // })
+
+    it('should return 403 shen user do not login', async () => {
+      const productId = () => 'product-123' // stub
+      const response = await supertest(app).put(`/cart/${productId()}`)
+
+      expect<number>(response.statusCode).toBe(403)
     })
   })
 })

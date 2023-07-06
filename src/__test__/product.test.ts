@@ -1,15 +1,10 @@
-import mongoose from 'mongoose';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import supertest from 'supertest';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
-// import app from '../index';
+import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid'
 import ProductType from '../database/types/products.types';
 import createServer from '../server';
 import ProductService from '../database/services/product.srv';
-// import { AuthController } from '../controllers/auth.controller';
-// import ServerTestHelper from '../../test/ServerTestHelper';
 import { hashing } from '../utils/hashing';
 import { UserService } from '../database/services/auth.services';
 

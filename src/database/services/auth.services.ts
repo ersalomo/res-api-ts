@@ -16,6 +16,6 @@ export const UserService = {
       })
   },
   async findUserByEmail(email: string) {
-    return await UserModel.findOne({ email })
+    return UserModel.findOne({ email })
   }
 }

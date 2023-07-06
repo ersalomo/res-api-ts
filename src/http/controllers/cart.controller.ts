@@ -35,8 +35,9 @@ export default class CartController {
   public updateCart = async (req: Request, res: Response) => {
     const { id: cartId } = req.params
     const { count } = req.body
-    const cart = await this._cartService.veryfyCartUser(cartId, res.locals.user._doc.user_id)
+    const cart = await this._cartService.verifyCartUser(cartId, res.locals.user._doc.user_id)
     if (!cart) return new NotFoundResponse('cart not found').send(res)
+    console.log(cart)
     await this._cartService.addCountProduct(new Types.ObjectId(cartId), count)
     return new SuccessMsgResponse('cart updated').send(res)
   }
@@ -44,7 +45,7 @@ export default class CartController {
   public deleteCartUser = async (req: Request, res: Response) => {
     const { id: cartId } = req.params
     const { user } = res.locals
-    const cart = await this._cartService.veryfyCartUser(cartId, user.user_id)
+    const cart = await this._cartService.verifyCartUser(cartId, user.user_id)
     logger.info(`${cart}`)
     if (!cart) return new NotFoundResponse('cart not found').send(res)
     await this._cartService.removeFromCart(cartId)
